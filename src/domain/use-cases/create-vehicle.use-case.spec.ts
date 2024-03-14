@@ -7,7 +7,7 @@ const newVehicle = {
   brand: 'Porsche',
 };
 
-describe('Vehicle use case', () => {
+describe('Create vehicle use case', () => {
   it('Should be able to create a new vehicle', async () => {
     const vehicleRepository = new InMemoryVehicleRepository();
     const createVehicle = new CreateVehicleUseCase(vehicleRepository);
