@@ -3,3 +3,7 @@ export interface IVehicle {
   color: string;
   brand: string;
 }
+
+export interface IDriver {
+  name: string;
+}
