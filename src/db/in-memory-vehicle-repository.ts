@@ -14,4 +14,14 @@ export default class InMemoryVehicleRepository implements VehicleRepository {
     if (!vehicle) return null;
     return vehicle;
   }
+
+  async update(newVehicle: Vehicle): Promise<void> {
+    this.vehicles.map((vehicle) => {
+      if (vehicle.id === newVehicle.id) {
+        return newVehicle;
+      }
+
+      return vehicle;
+    });
+  }
 }

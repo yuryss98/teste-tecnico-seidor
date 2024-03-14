@@ -29,4 +29,8 @@ export class Vehicle {
   get brand() {
     return this._props.brand;
   }
+
+  updateVehicle(vehicle: IVehicle) {
+    this._props = vehicle;
+  }
 }
