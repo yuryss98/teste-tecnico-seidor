@@ -1,13 +1,15 @@
 import { Driver } from './driver.entity';
 
+const driverName = 'Driver name';
+const makeSut = (): Driver => new Driver({
+  name: driverName,
+});
+
 describe('Driver entity', () => {
   it('Should be able to create a new driver', () => {
-    const name = 'Driver name';
-    const driver = new Driver({
-      name,
-    });
+    const sut = makeSut();
 
-    expect(driver).toBeTruthy();
-    expect(driver.name).toBe(name);
+    expect(sut).toBeTruthy();
+    expect(sut.name).toBe(driverName);
   });
 });
