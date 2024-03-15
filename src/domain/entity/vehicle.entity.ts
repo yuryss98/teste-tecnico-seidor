@@ -4,10 +4,12 @@ import { IVehicle } from '../interface/vehicle.interface';
 export class Vehicle {
   private _props: IVehicle;
   private _id: string;
+  private _status: boolean;
 
   constructor(props: IVehicle, id?: string) {
     this._props = { ...props };
     this._id = id ?? randomUUID();
+    this._status = true;
   }
 
   get id() {
@@ -30,7 +32,15 @@ export class Vehicle {
     return this._props.brand;
   }
 
+  get status() {
+    return this._status;
+  }
+
   updateVehicle(vehicle: IVehicle) {
     this._props = vehicle;
+  }
+
+  deleteVehicle() {
+    this._status = false;
   }
 }

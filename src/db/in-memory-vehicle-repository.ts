@@ -10,7 +10,7 @@ export default class InMemoryVehicleRepository implements VehicleRepository {
   }
 
   async findById(vehicleId: string): Promise<Vehicle | null> {
-    const vehicle = this.vehicles.find(({ id }) => id === vehicleId);
+    const vehicle = this.vehicles.find(({ id, status }) => id === vehicleId && status);
     if (!vehicle) return null;
     return vehicle;
   }
@@ -19,6 +19,16 @@ export default class InMemoryVehicleRepository implements VehicleRepository {
     this.vehicles.map((vehicle) => {
       if (vehicle.id === newVehicle.id) {
         return newVehicle;
+      }
+
+      return vehicle;
+    });
+  }
+
+  async delete(deletedVehicle: Vehicle): Promise<void> {
+    this.vehicles.map((vehicle) => {
+      if (vehicle.id === deletedVehicle.id) {
+        return deletedVehicle;
       }
 
       return vehicle;
