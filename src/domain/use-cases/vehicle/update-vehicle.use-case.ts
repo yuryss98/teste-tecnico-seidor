@@ -1,5 +1,5 @@
-import { IVehicle } from '../interface/vehicle.interface';
-import VehicleRepository from '../repository/vehicle.repository';
+import { IVehicle } from '../../interface/vehicle.interface';
+import VehicleRepository from '../../repository/vehicle.repository';
 
 export default class UpdateVehicleUseCase {
   constructor(private vehicleRepository: VehicleRepository) {}

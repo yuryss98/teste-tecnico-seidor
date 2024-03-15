@@ -1,4 +1,4 @@
-import InMemoryVehicleRepository from '../../db/in-memory-vehicle-repository';
+import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository';
 import CreateVehicleUseCase from './create-vehicle.use-case';
 
 const newVehicle = {

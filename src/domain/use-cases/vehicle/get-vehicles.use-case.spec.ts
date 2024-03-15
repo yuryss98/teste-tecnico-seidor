@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
-import InMemoryVehicleRepository from '../../db/in-memory-vehicle-repository';
-import { Vehicle } from '../entity/vehicle.entity';
+import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository';
+import { Vehicle } from '../../entity/vehicle.entity';
 import GetVehiclesCase from './get-vehicles.use-case';
 
 const newVehicle1 = {

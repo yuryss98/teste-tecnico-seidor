@@ -1,5 +1,5 @@
-import { Vehicle } from '../entity/vehicle.entity';
-import VehicleRepository from '../repository/vehicle.repository';
+import { Vehicle } from '../../entity/vehicle.entity';
+import VehicleRepository from '../../repository/vehicle.repository';
 
 export default class GetVehiclesCase {
   constructor(private vehicleRepository: VehicleRepository) {}

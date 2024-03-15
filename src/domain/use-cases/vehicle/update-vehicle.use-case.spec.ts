@@ -1,5 +1,5 @@
-import InMemoryVehicleRepository from '../../db/in-memory-vehicle-repository';
-import { Vehicle } from '../entity/vehicle.entity';
+import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository';
+import { Vehicle } from '../../entity/vehicle.entity';
 import UpdateVehicleUseCase from './update-vehicle.use-case';
 
 const vehicle1 = {

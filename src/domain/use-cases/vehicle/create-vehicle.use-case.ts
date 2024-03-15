@@ -1,6 +1,6 @@
-import { Vehicle } from '../entity/vehicle.entity';
-import { IVehicle } from '../interface/vehicle.interface';
-import VehicleRepository from '../repository/vehicle.repository';
+import { Vehicle } from '../../entity/vehicle.entity';
+import { IVehicle } from '../../interface/vehicle.interface';
+import VehicleRepository from '../../repository/vehicle.repository';
 
 export default class CreateVehicleUseCase {
   constructor(private vehicleRepository: VehicleRepository) {}

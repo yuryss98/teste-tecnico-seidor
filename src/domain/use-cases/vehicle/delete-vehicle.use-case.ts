@@ -1,4 +1,4 @@
-import VehicleRepository from '../repository/vehicle.repository';
+import VehicleRepository from '../../repository/vehicle.repository';
 
 export default class DeleteVehicleUseCase {
   constructor(private vehicleRepository: VehicleRepository) {}
