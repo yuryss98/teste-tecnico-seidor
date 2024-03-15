@@ -17,8 +17,8 @@ describe('Delete vehicle', () => {
     const deleteVehicle = new DeleteVehicleUseCase(vehicleRepository);
     await deleteVehicle.execute(newVehicle.id);
 
-    const vehicleDeleted = await vehicleRepository.findById(newVehicle.id);
-    expect(vehicleDeleted).toBeFalsy();
+    const vehicleFound = await vehicleRepository.findById(newVehicle.id);
+    expect(vehicleFound).toBeFalsy();
   });
 
   it('Should be able to return null if not found vehicle', async () => {
