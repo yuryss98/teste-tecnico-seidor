@@ -15,6 +15,29 @@ export default class InMemoryVehicleRepository implements VehicleRepository {
     return vehicle;
   }
 
+  async findAll(color?: string, brand?: string): Promise<Vehicle[]> {
+    if (color && brand) {
+      return this.vehicles.filter((vehicle) => (
+        vehicle.color.toLowerCase() === color.toLowerCase()
+        && vehicle.brand.toLowerCase() === brand.toLowerCase()
+      ));
+    }
+
+    if (color) {
+      return this.vehicles.filter((vehicle) => (
+        vehicle.color.toLowerCase() === color.toLowerCase()
+      ));
+    }
+
+    if (brand) {
+      return this.vehicles.filter((vehicle) => (
+        vehicle.brand.toLowerCase() === brand.toLowerCase()
+      ));
+    }
+
+    return this.vehicles;
+  }
+
   async update(newVehicle: Vehicle): Promise<void> {
     this.vehicles.map((vehicle) => {
       if (vehicle.id === newVehicle.id) {
