@@ -1,14 +1,12 @@
 /* eslint-disable max-lines-per-function */
 import { Driver } from './driver.entity';
 import { Vehicle } from './vehicle.entity';
-import { VehicleUtilization } from './vehicle-utilization.entity';
+import { VehicleUtilizationEntity } from './vehicle-utilization.entity';
 
 const plate = 'ABC-1234';
 const color = 'Black';
 const brand = 'Porsche';
 const driverName = 'Driver name';
-const startDate = new Date('2024-03-13');
-const endDate = new Date('2024-03-14');
 const utilizationMotive = 'Utilization motive';
 
 const makeVehicle = (): Vehicle => new Vehicle({
@@ -21,14 +19,12 @@ const makeDriver = (): Driver => new Driver({
   name: driverName,
 });
 
-const makeSut = (): VehicleUtilization => {
+const makeSut = (): VehicleUtilizationEntity => {
   const driver = makeDriver();
   const vehicle = makeVehicle();
-  return new VehicleUtilization({
+  return new VehicleUtilizationEntity({
     driver,
     vehicle,
-    startDate,
-    endDate,
     utilizationMotive,
   });
 };
@@ -42,8 +38,7 @@ describe('Vehicle Utilization entity', () => {
     expect(sut.vehicle.plate).toBe(plate);
     expect(sut.vehicle.color).toBe(color);
     expect(sut.vehicle.brand).toBe(brand);
-    expect(sut.startDate.toISOString()).toBe(startDate.toISOString());
-    expect(sut.endDate.toISOString()).toBe(endDate.toISOString());
+    expect(sut.startDate).toBeInstanceOf(Date);
     expect(sut.utilizationMotive).toBe(utilizationMotive);
   });
 });
