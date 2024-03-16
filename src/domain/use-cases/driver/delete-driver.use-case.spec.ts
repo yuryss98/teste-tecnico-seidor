@@ -1,3 +1,4 @@
+import DriverNotFoundError from '../../error/driver-not-found.error';
 import InMemoryDriverRepository from '../../../db/in-memory-driver-repository';
 import { Driver } from '../../entity/driver.entity';
 import DeleteDriverUseCase from './delete-driver.use-case';
@@ -19,12 +20,13 @@ describe('Delete driver', () => {
     expect(driverFound).toBeFalsy();
   });
 
-  it('Should be able to return null if not found driver', async () => {
-    const driverNotFound = '999999999999999';
+  it('Should throw an error when not finding a driver', async () => {
+    const invalidDriverId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
     const driverRepository = new InMemoryDriverRepository();
     const deleteDriver = new DeleteDriverUseCase(driverRepository);
-    const driverDeleted = await deleteDriver.execute(driverNotFound);
 
-    expect(driverDeleted).toEqual(null);
+    expect(async () => {
+      await deleteDriver.execute(invalidDriverId);
+    }).rejects.toThrow(DriverNotFoundError);
   });
 });

@@ -1,6 +1,7 @@
 import { Driver } from '../../entity/driver.entity';
 import InMemoryDriverRepository from '../../../db/in-memory-driver-repository';
 import UpdateDriverUseCase from './update-driver.use-case';
+import DriverNotFoundError from '../../error/driver-not-found.error';
 
 const driver1 = {
   name: 'Driver name 1',
@@ -23,12 +24,13 @@ describe('Update driver', () => {
     expect(driverUpdated.name).toEqual(driver2.name);
   });
 
-  it('Should be able to return null if not found driver', async () => {
-    const driverNotFound = '999999999999999';
+  it('Should throw an error when not finding a driver', async () => {
+    const invalidDriverId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
     const driverRepository = new InMemoryDriverRepository();
     const updateDriver = new UpdateDriverUseCase(driverRepository);
-    const driverUpdated = await updateDriver.execute(driver2, driverNotFound);
 
-    expect(driverUpdated).toEqual(null);
+    expect(async () => {
+      await updateDriver.execute(driver2, invalidDriverId);
+    }).rejects.toThrow(DriverNotFoundError);
   });
 });

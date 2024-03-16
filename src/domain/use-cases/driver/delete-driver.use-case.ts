@@ -1,3 +1,4 @@
+import DriverNotFoundError from '../../error/driver-not-found.error';
 import DriverRepository from '../../repository/driver.repository';
 
 export default class DeleteDriverUseCase {
@@ -5,7 +6,7 @@ export default class DeleteDriverUseCase {
 
   async execute(driverId: string): Promise<void> {
     const driver = await this.driverRepository.findById(driverId);
-    if (!driver) return null;
+    if (!driver) throw new DriverNotFoundError();
 
     driver.deleteDriver();
     return this.driverRepository.delete(driver);

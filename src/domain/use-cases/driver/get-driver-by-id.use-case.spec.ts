@@ -1,3 +1,4 @@
+import DriverNotFoundError from '../../error/driver-not-found.error';
 import InMemoryDriverRepository from '../../../db/in-memory-driver-repository';
 import { Driver } from '../../entity/driver.entity';
 import GetDriverByIdUseCase from './get-driver-by-id.use-case';
@@ -17,12 +18,13 @@ describe('Get driver by id use case', () => {
     expect(driverFound).toEqual(driver);
   });
 
-  it('Should be able to return null if not found driver', async () => {
-    const driverNotFound = '999999999999999';
+  it('Should throw an error when not finding a driver', async () => {
+    const invalidDriverId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
     const driverRepository = new InMemoryDriverRepository();
     const getDriverById = new GetDriverByIdUseCase(driverRepository);
-    const driverFound = await getDriverById.execute(driverNotFound);
 
-    expect(driverFound).toEqual(null);
+    expect(async () => {
+      await getDriverById.execute(invalidDriverId);
+    }).rejects.toThrow(DriverNotFoundError);
   });
 });
