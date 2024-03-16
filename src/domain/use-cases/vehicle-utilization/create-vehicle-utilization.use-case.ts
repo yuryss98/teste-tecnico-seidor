@@ -16,11 +16,10 @@ export default class CreateVehicleUtilizationUseCase {
   async execute(
     newVehicleUtilization: ICreateVehicleUtilization,
   ): Promise<VehicleUtilizationEntity> {
-    const driver = await this.driverRepository.findById(newVehicleUtilization.driverId);
-    if (!driver) throw new DriverNotFoundError();
-
-    const vehicle = await this.vehicleRepository.findById(newVehicleUtilization.vehicleId);
-    if (!vehicle) throw new VehicleNotFoundError();
+    const { driver, vehicle } = await this._verifyCanCreateVehicleUtilization(
+      newVehicleUtilization.driverId,
+      newVehicleUtilization.vehicleId,
+    );
 
     const vehicleUtilization = new VehicleUtilizationEntity({
       driver,
@@ -31,5 +30,18 @@ export default class CreateVehicleUtilizationUseCase {
     const vehicleUtilizationId = await this.vehicleUtilizationRepository.create(vehicleUtilization);
     vehicleUtilization.id = vehicleUtilizationId;
     return vehicleUtilization;
+  }
+
+  private async _verifyCanCreateVehicleUtilization(driverId: string, vehicleId: string) {
+    const driver = await this.driverRepository.findById(driverId);
+    if (!driver) throw new DriverNotFoundError();
+
+    const vehicle = await this.vehicleRepository.findById(vehicleId);
+    if (!vehicle) throw new VehicleNotFoundError();
+
+    return {
+      driver,
+      vehicle,
+    };
   }
 }
