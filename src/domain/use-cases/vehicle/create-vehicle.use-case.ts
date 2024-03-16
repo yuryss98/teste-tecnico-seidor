@@ -8,6 +8,7 @@ export default class CreateVehicleUseCase {
   async execute(newVehicle: IVehicle): Promise<Vehicle> {
     const vehicle = new Vehicle(newVehicle);
     const vehicleId = await this.vehicleRepository.create(vehicle);
+
     vehicle.id = vehicleId;
     return vehicle;
   }
