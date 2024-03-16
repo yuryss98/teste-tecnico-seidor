@@ -6,3 +6,9 @@ export interface IVehicleUtilization {
   vehicle: IVehicle;
   utilizationMotive: string;
 }
+
+export interface ICreateVehicleUtilization {
+  driverId: string,
+  vehicleId: string,
+  utilizationMotive: string;
+}
