@@ -6,6 +6,8 @@ import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository'
 import InMemoryDriverRepository from '../../../db/in-memory-driver-repository';
 import InMemoryVehicleUtilizationRepository
   from '../../../db/in-memory-vehicle-utilization-repository';
+import DriverNotFoundError from '../../error/driver-not-found.error';
+import VehicleNotFoundError from '../../error/vehicle-not-found.error';
 
 const newVehicle = {
   plate: 'ABC-1234',
@@ -49,5 +51,41 @@ describe('Create vehicle utilization use case', () => {
 
     expect(vehicleUtilizationRepository.vehiclesUtilization).toHaveLength(1);
     expect(vehicleUtilizationRepository.vehiclesUtilization[0]).toEqual(vehiclesUtilization);
+  });
+
+  it('Should throw an error when not finding a driver', async () => {
+    const vehicleUtilizationRepository = new InMemoryVehicleUtilizationRepository();
+    const createVehicleUtilization = new CreateVehicleUtilizationUseCase(
+      vehicleUtilizationRepository,
+      driverRepository,
+      vehicleRepository,
+    );
+
+    const invalidDriverId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
+
+    expect(async () => {
+      await createVehicleUtilization.execute({
+        ...newVehicleUtilization,
+        driverId: invalidDriverId,
+      });
+    }).rejects.toThrow(DriverNotFoundError);
+  });
+
+  it('Should throw an error when not finding a vehicle', async () => {
+    const vehicleUtilizationRepository = new InMemoryVehicleUtilizationRepository();
+    const createVehicleUtilization = new CreateVehicleUtilizationUseCase(
+      vehicleUtilizationRepository,
+      driverRepository,
+      vehicleRepository,
+    );
+
+    const invalidVehicleId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
+
+    expect(async () => {
+      await createVehicleUtilization.execute({
+        ...newVehicleUtilization,
+        vehicleId: invalidVehicleId,
+      });
+    }).rejects.toThrow(VehicleNotFoundError);
   });
 });
