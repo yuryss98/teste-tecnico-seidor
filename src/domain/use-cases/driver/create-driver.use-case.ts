@@ -8,6 +8,7 @@ export default class CreateDriverUseCase {
   async execute(newDriver: IDriver): Promise<Driver> {
     const driver = new Driver(newDriver);
     const driverId = await this.driverRepository.create(driver);
+
     driver.id = driverId;
     return driver;
   }
