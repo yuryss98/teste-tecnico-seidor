@@ -1,3 +1,4 @@
+import VehicleNotFoundError from '../../error/vehicle-not-found.error';
 import VehicleRepository from '../../repository/vehicle.repository';
 
 export default class DeleteVehicleUseCase {
@@ -5,7 +6,7 @@ export default class DeleteVehicleUseCase {
 
   async execute(vehicleId: string): Promise<void> {
     const vehicle = await this.vehicleRepository.findById(vehicleId);
-    if (!vehicle) return null;
+    if (!vehicle) throw new VehicleNotFoundError();
 
     vehicle.deleteVehicle();
     return this.vehicleRepository.delete(vehicle);

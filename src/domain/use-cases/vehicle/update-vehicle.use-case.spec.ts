@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+import VehicleNotFoundError from '../../error/vehicle-not-found.error';
 import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository';
 import { Vehicle } from '../../entity/vehicle.entity';
 import UpdateVehicleUseCase from './update-vehicle.use-case';
@@ -29,12 +31,13 @@ describe('Update vehicle', () => {
     expect(vehicleUpdated.plate).toEqual(vehicle2.plate);
   });
 
-  it('Should be able to return null if not found vehicle', async () => {
-    const vehicleNotFound = '999999999999999';
+  it('Should throw an error when not finding a vehicle', async () => {
+    const invalidVehicleId = 'cccccccc-bbbb-1ccc-8ddd-eeeeeeeeeeee';
     const vehicleRepository = new InMemoryVehicleRepository();
     const updateVehicle = new UpdateVehicleUseCase(vehicleRepository);
-    const vehicleUpdated = await updateVehicle.execute(vehicle2, vehicleNotFound);
 
-    expect(vehicleUpdated).toEqual(null);
+    expect(async () => {
+      await updateVehicle.execute(vehicle2, invalidVehicleId);
+    }).rejects.toThrow(VehicleNotFoundError);
   });
 });
