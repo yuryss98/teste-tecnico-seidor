@@ -2,11 +2,13 @@ import { Request, Response } from 'express';
 import CreateDriverUseCase from '../../domain/use-cases/driver/create-driver.use-case';
 import MissingParamError from '../error/missing-param-error';
 import GetDriverByIdUseCase from '../../domain/use-cases/driver/get-driver-by-id.use-case';
+import GetDriversCase from '../../domain/use-cases/driver/get-drivers.use-case';
 
 export default class DriverController {
   constructor(
     private createDriverUseCase: CreateDriverUseCase,
     private getDriverByIdUseCase: GetDriverByIdUseCase,
+    private getDriversCase: GetDriversCase,
   ) { }
 
   create = async (req: Request, res: Response) => {
@@ -28,6 +30,17 @@ export default class DriverController {
         id: driver.id,
         name: driver.name,
       },
+    });
+  };
+
+  getDrivers = async (req: Request, res: Response) => {
+    const drivers = await this.getDriversCase.execute(req.query.name as string);
+
+    return res.status(200).json({
+      message: drivers.map((driver) => ({
+        id: driver.id,
+        name: driver.name,
+      })),
     });
   };
 }
