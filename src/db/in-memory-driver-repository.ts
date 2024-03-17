@@ -18,11 +18,11 @@ export default class InMemoryDriverRepository implements DriverRepository {
   async findAll(name?: string): Promise<Driver[]> {
     if (name) {
       return this.drivers.filter((driver) => (
-        driver.name.toLowerCase() === name.toLowerCase()
+        driver.name.toLowerCase() === name.toLowerCase() && !!driver.status
       ));
     }
 
-    return this.drivers;
+    return this.drivers.filter(({ status }) => !!status);
   }
 
   async update(newDriver: Driver): Promise<void> {
