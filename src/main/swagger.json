@@ -668,6 +668,9 @@
           },
           "404": {
             "description": "Vehicle Utilization not found error"
+          },
+          "409": {
+            "description": "Vehicle Utilization conflict error"
           }
         }
       }

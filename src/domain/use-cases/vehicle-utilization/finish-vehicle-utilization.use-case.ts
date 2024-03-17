@@ -1,3 +1,4 @@
+import VehicleUtilizationConflictError from '../../error/vehicle-utilization-conflict.error';
 import VehicleUtilizationNotFoundError from '../../error/vehicle-utilization-not-found.error';
 import VehicleUtilizationRepository from '../../repository/vehicle-utilization.repository';
 
@@ -11,6 +12,10 @@ export default class FinishVehiclesUtilizationUseCase {
       .vehicleUtilizationRepository.findById(vehicleUtilizationId);
 
     if (!vehiclesUtilization) throw new VehicleUtilizationNotFoundError();
+
+    if (!vehiclesUtilization.vehicleUtilizationIsActive) {
+      throw new VehicleUtilizationConflictError();
+    }
 
     vehiclesUtilization.finishVehicleUtilization();
 
