@@ -494,6 +494,70 @@
           }
         }
       }
+    },
+    "/vehicle-utilization/create": {
+      "post": {
+        "tags": [
+          "Vehicle Utilization"
+        ],
+        "summary": "Create a new vehicle utilization",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "driverId",
+                  "vehicleId",
+                  "utilizationMotive"
+                ],
+                "properties": {
+                  "driverId": {
+                    "type": "string",
+                    "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                  },
+                  "vehicleId": {
+                    "type": "string",
+                    "example":  "f8765bd4-06b5-4603-809a-621b3ce75088"
+                  },
+                  "utilizationMotive": {
+                    "type": "string",
+                    "example": "Vehicle utilization to travel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "New vehicle utilization created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing param error"
+          },
+          "404": {
+            "description": "Driver/Vehicle not found error"
+          },
+          "409": {
+            "description": "Driver/Vehicle conflict error"
+          }
+        }
+      }
     }
   }
 }
