@@ -66,4 +66,10 @@ export default class VehicleController {
 
     return res.status(204).end();
   };
+
+  delete = async (req: Request, res: Response) => {
+    await this.deleteVehicleUseCase.execute(req.params.vehicleId);
+
+    return res.status(204).end();
+  };
 }
