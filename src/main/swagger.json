@@ -558,6 +558,91 @@
           }
         }
       }
+    },
+    "/vehicle-utilization/all": {
+      "get": {
+        "tags": [
+          "Vehicle Utilization"
+        ],
+        "summary": "Get all vehicles utilization",
+        "responses": {
+          "200": {
+            "description": "Vehicles utilization info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                          },
+                          "utilizationMotive": {
+                            "type": "string",
+                            "example": "Vehicle utilization to travel"
+                          },
+                          "startDate": {
+                            "type": "date",
+                            "example": "2024-03-17T23:23:52.239Z"
+                          },
+                          "vehicleUtilizationIsActive": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "endDate": {
+                            "type": "string",
+                            "example": "2024-03-17T23:23:52.239Z",
+                            "nullable": true
+                          },
+                          "driver": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Driver name"
+                              }
+                            }
+                          },
+                          "vehicle": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                              },
+                              "brand": {
+                                "type": "string",
+                                "example": "BMW"
+                              },
+                              "color": {
+                                "type": "string",
+                                "example": "White"
+                              },
+                              "plate": {
+                                "type": "string",
+                                "example": "BRA2E20"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
