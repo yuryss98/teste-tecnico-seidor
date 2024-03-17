@@ -6,5 +6,6 @@ const vehicleUtilizationController = makeVehicleUtilizationController();
 
 router.post('/create', vehicleUtilizationController.create);
 router.get('/all', vehicleUtilizationController.getVehiclesUtilization);
+router.put('/:vehicleUtilizationId', vehicleUtilizationController.finish);
 
 export default router;

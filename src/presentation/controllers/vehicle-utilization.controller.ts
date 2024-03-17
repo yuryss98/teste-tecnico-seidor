@@ -51,4 +51,10 @@ export default class VehicleUtilizationController {
       })),
     });
   };
+
+  finish = async (req: Request, res: Response) => {
+    await this.finishVehiclesUtilizationUseCase.execute(req.params.vehicleUtilizationId);
+
+    return res.status(204).end();
+  };
 }
