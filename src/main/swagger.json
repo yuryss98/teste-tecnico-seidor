@@ -52,6 +52,56 @@
           }
         }
       }
+    },
+    "/driver/{driverId}": {
+      "get": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Get driver by id.",
+        "parameters": [
+          {
+            "name": "driverId",
+            "in": "path",
+            "description": "Driver Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Driver info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Driver name"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found error"
+          }
+        }
+      }
     }
   }
 }
