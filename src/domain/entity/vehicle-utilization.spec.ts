@@ -22,11 +22,15 @@ const makeDriver = (): Driver => new Driver({
 const makeSut = (): VehicleUtilizationEntity => {
   const driver = makeDriver();
   const vehicle = makeVehicle();
-  return new VehicleUtilizationEntity({
+  return new VehicleUtilizationEntity(
+    {
+      utilizationMotive,
+      startDate: new Date(),
+      vehicleUtilizationIsActive: true,
+    },
     driver,
     vehicle,
-    utilizationMotive,
-  });
+  );
 };
 
 describe('Vehicle Utilization entity', () => {

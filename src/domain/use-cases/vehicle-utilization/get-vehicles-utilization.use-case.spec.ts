@@ -30,11 +30,15 @@ describe('Get vehicles utilization use case', () => {
     const driver = new Driver(newDriver);
     await driverRepository.create(driver);
 
-    const vehicleUtilization = new VehicleUtilizationEntity({
+    const vehicleUtilization = new VehicleUtilizationEntity(
+      {
+        utilizationMotive: 'Vehicle utilization to travel',
+        startDate: new Date(),
+        vehicleUtilizationIsActive: true,
+      },
       driver,
       vehicle,
-      utilizationMotive: 'Vehicle utilization to travel',
-    });
+    );
 
     await vehicleUtilizationRepository.create(vehicleUtilization);
   });

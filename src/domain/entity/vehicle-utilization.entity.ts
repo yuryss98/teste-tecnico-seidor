@@ -1,18 +1,24 @@
 import { randomUUID } from 'crypto';
 import { IVehicleUtilization } from '../interface/vehicle-utilization.interface';
+import { Driver } from './driver.entity';
+import { Vehicle } from './vehicle.entity';
 
 export class VehicleUtilizationEntity {
   private _props: IVehicleUtilization;
   private _id: string;
-  private _startDate: Date;
-  private _endDate: Date;
-  private _vehicleInUse: boolean;
+  private _driver: Driver;
+  private _vehicle: Vehicle;
 
-  constructor(props: IVehicleUtilization, id?: string, startDate?: Date) {
+  constructor(
+    props: IVehicleUtilization,
+    driver: Driver,
+    vehicle: Vehicle,
+    id?: string,
+  ) {
     this._props = { ...props };
     this._id = id ?? randomUUID();
-    this._startDate = startDate ?? new Date();
-    this._vehicleInUse = true;
+    this._driver = driver;
+    this._vehicle = vehicle;
   }
 
   get id() {
@@ -24,31 +30,31 @@ export class VehicleUtilizationEntity {
   }
 
   get driver() {
-    return this._props.driver;
+    return this._driver;
   }
 
   get vehicle() {
-    return this._props.vehicle;
+    return this._vehicle;
   }
 
   get startDate() {
-    return this._startDate;
+    return this._props.startDate;
   }
 
   get endDate() {
-    return this._endDate;
+    return this._props.endDate;
   }
 
   get utilizationMotive() {
     return this._props.utilizationMotive;
   }
 
-  get vehicleInUse() {
-    return this._vehicleInUse;
+  get vehicleUtilizationIsActive() {
+    return this._props.vehicleUtilizationIsActive;
   }
 
   finishVehicleUtilization() {
-    this._endDate = new Date();
-    this._vehicleInUse = false;
+    this._props.endDate = new Date();
+    this._props.vehicleUtilizationIsActive = false;
   }
 }
