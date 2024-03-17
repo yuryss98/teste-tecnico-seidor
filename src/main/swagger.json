@@ -284,6 +284,64 @@
           }
         }
       }
+    },
+    "/vehicle/{vehicleId}": {
+      "get": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Get vehicle by id.",
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "Vehicle Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vehicle info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                        },
+                        "brand": {
+                          "type": "string",
+                          "example": "BMW"
+                        },
+                        "color": {
+                          "type": "string",
+                          "example": "White"
+                        },
+                        "plate": {
+                          "type": "string",
+                          "example": "BRA2E20"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Vehicle not found error"
+          }
+        }
+      }
     }
   }
 }
