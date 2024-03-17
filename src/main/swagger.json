@@ -101,6 +101,54 @@
             "description": "Driver not found error"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Update driver",
+        "parameters": [
+          {
+            "name": "driverId",
+            "in": "path",
+            "description": "Driver Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Update driver name"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Driver updated"
+          },
+          "400": {
+            "description": "Missing param error"
+          },
+          "404": {
+            "description": "Driver not found error"
+          }
+        }
       }
     },
     "/driver/all": {
