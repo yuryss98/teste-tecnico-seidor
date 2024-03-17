@@ -226,6 +226,64 @@
           }
         }
       }
+    },
+    "/vehicle/create": {
+      "post": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Create a new vehicle",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "plate",
+                  "color",
+                  "brand"
+                ],
+                "properties": {
+                  "plate": {
+                    "type": "string",
+                    "example": "BRA2E20"
+                  },
+                  "color": {
+                    "type": "string",
+                    "example": "White"
+                  },
+                  "brand": {
+                    "type": "string",
+                    "example": "BMW"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "New vehicle created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing param error"
+          }
+        }
+      }
     }
   }
 }
