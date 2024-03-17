@@ -13,6 +13,10 @@ export default class InMemoryVehicleUtilizationRepository implements VehicleUtil
     return this.vehiclesUtilization;
   }
 
+  async findById(vehicleUtilizationId: string): Promise<VehicleUtilizationEntity> {
+    return this.vehiclesUtilization.find(({ id }) => id === vehicleUtilizationId);
+  }
+
   async finishVehicleUtilization(
     finishedVehicleUtilization: VehicleUtilizationEntity,
   ): Promise<void> {
