@@ -519,7 +519,7 @@
                   },
                   "vehicleId": {
                     "type": "string",
-                    "example":  "f8765bd4-06b5-4603-809a-621b3ce75088"
+                    "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
                   },
                   "utilizationMotive": {
                     "type": "string",
@@ -640,6 +640,34 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/vehicle-utilization/{vehicleUtilizationId}": {
+      "put": {
+        "tags": [
+          "Vehicle Utilization"
+        ],
+        "summary": "Finish vehicle utilization",
+        "parameters": [
+          {
+            "name": "vehicleUtilizationId",
+            "in": "path",
+            "description": "Vehicle Utilization Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Finished vehicle utilization"
+          },
+          "404": {
+            "description": "Vehicle Utilization not found error"
           }
         }
       }
