@@ -28,4 +28,17 @@ export default class VehicleController {
       message: vehicleCreated.id,
     });
   };
+
+  getById = async (req: Request, res: Response) => {
+    const vehicle = await this.getVehicleByIdUseCase.execute(req.params.vehicleId);
+
+    return res.status(200).json({
+      message: {
+        id: vehicle.id,
+        brand: vehicle.brand,
+        color: vehicle.color,
+        plate: vehicle.plate,
+      },
+    });
+  };
 }
