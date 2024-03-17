@@ -2,10 +2,13 @@ import express from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 import driverRoutes from '../routes/driver.routes';
 import errorHandler from '../middleware/error-handle';
 
 const app = express();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(morgan('combined'));
 app.use(helmet());
 app.use(express.json());
