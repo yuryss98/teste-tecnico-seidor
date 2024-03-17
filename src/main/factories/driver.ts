@@ -6,8 +6,9 @@ import GetDriversCase from '../../domain/use-cases/driver/get-drivers.use-case';
 import UpdateDriverUseCase from '../../domain/use-cases/driver/update-driver.use-case';
 import DeleteDriverUseCase from '../../domain/use-cases/driver/delete-driver.use-case';
 
+export const driverRepository = new InMemoryDriverRepository();
+
 export const makeDriverController = (): DriverController => {
-  const driverRepository = new InMemoryDriverRepository();
   const createDriverUseCase = new CreateDriverUseCase(driverRepository);
   const getDriverByIdUseCase = new GetDriverByIdUseCase(driverRepository);
   const getDriversUseCase = new GetDriversCase(driverRepository);

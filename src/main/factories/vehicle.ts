@@ -6,8 +6,9 @@ import UpdateVehicleUseCase from '../../domain/use-cases/vehicle/update-vehicle.
 import DeleteVehicleUseCase from '../../domain/use-cases/vehicle/delete-vehicle.use-case';
 import InMemoryVehicleRepository from '../../db/in-memory-vehicle-repository';
 
+export const vehicleRepository = new InMemoryVehicleRepository();
+
 export const makeVehicleController = (): VehicleController => {
-  const vehicleRepository = new InMemoryVehicleRepository();
   const createVehicleUseCase = new CreateVehicleUseCase(vehicleRepository);
   const getVehicleByIdUseCase = new GetVehicleByIdUseCase(vehicleRepository);
   const getVehiclesUseCase = new GetVehiclesUseCase(vehicleRepository);
