@@ -149,6 +149,32 @@
             "description": "Driver not found error"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Delete driver",
+        "parameters": [
+          {
+            "name": "driverId",
+            "in": "path",
+            "description": "Driver Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Driver deleted"
+          },
+          "404": {
+            "description": "Driver not found error"
+          }
+        }
       }
     },
     "/driver/all": {
