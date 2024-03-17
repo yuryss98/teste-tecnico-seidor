@@ -102,6 +102,56 @@
           }
         }
       }
+    },
+    "/driver/all": {
+      "get": {
+        "tags": [
+          "Driver"
+        ],
+        "summary": "Get all drivers or drivers by name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Driver name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "Driver name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Drivers info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Driver name"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
