@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import InMemoryVehicleRepository from '../../../db/in-memory-vehicle-repository';
 import { Vehicle } from '../../entity/vehicle.entity';
-import GetVehiclesCase from './get-vehicles.use-case';
+import GetVehiclesUseCase from './get-vehicles.use-case';
 
 const newVehicle1 = {
   plate: 'ABC-1234',
@@ -41,25 +41,25 @@ describe('Get vehicles', () => {
   });
 
   it('Should be able to return all vehicles', async () => {
-    const getVehicles = new GetVehiclesCase(vehicleRepository);
+    const getVehicles = new GetVehiclesUseCase(vehicleRepository);
     const vehicles = await getVehicles.execute();
     expect(vehicles).toHaveLength(4);
   });
 
   it('Should be able to return all white vehicles', async () => {
-    const getVehicles = new GetVehiclesCase(vehicleRepository);
+    const getVehicles = new GetVehiclesUseCase(vehicleRepository);
     const vehicles = await getVehicles.execute('white');
     expect(vehicles).toHaveLength(2);
   });
 
   it('Should be able to return all Ferrari brand vehicles', async () => {
-    const getVehicles = new GetVehiclesCase(vehicleRepository);
+    const getVehicles = new GetVehiclesUseCase(vehicleRepository);
     const vehicles = await getVehicles.execute(undefined, 'ferrari');
     expect(vehicles).toHaveLength(3);
   });
 
   it('Should be able to return all white ferrari brand vehicles', async () => {
-    const getVehicles = new GetVehiclesCase(vehicleRepository);
+    const getVehicles = new GetVehiclesUseCase(vehicleRepository);
     const vehicles = await getVehicles.execute('white', 'ferrari');
     expect(vehicles).toHaveLength(2);
   });

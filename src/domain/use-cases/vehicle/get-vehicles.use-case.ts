@@ -1,7 +1,7 @@
 import { Vehicle } from '../../entity/vehicle.entity';
 import VehicleRepository from '../../repository/vehicle.repository';
 
-export default class GetVehiclesCase {
+export default class GetVehiclesUseCase {
   constructor(private vehicleRepository: VehicleRepository) {}
 
   async execute(color?: string, brand?: string): Promise<Vehicle[]> {
