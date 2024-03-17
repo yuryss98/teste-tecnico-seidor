@@ -5,6 +5,10 @@ import DriverNotFoundError from '../../error/driver-not-found.error';
 import VehicleNotFoundError from '../../error/vehicle-not-found.error';
 import { ICreateVehicleUtilization } from '../../interface/vehicle-utilization.interface';
 import { VehicleUtilizationEntity } from '../../entity/vehicle-utilization.entity';
+import VehicleUtilizationConflictDriverError
+  from '../../error/vehicle-utilization-conflict-driver.error';
+import VehicleUtilizationConflictVehicleError
+  from '../../error/vehicle-utilization-conflict-vehicle.error';
 
 export default class CreateVehicleUtilizationUseCase {
   constructor(
@@ -21,11 +25,15 @@ export default class CreateVehicleUtilizationUseCase {
       newVehicleUtilization.vehicleId,
     );
 
-    const vehicleUtilization = new VehicleUtilizationEntity({
+    const vehicleUtilization = new VehicleUtilizationEntity(
+      {
+        utilizationMotive: newVehicleUtilization.utilizationMotive,
+        startDate: new Date(),
+        vehicleUtilizationIsActive: true,
+      },
       driver,
       vehicle,
-      utilizationMotive: newVehicleUtilization.utilizationMotive,
-    });
+    );
 
     const vehicleUtilizationId = await this.vehicleUtilizationRepository.create(vehicleUtilization);
     vehicleUtilization.id = vehicleUtilizationId;
@@ -38,6 +46,13 @@ export default class CreateVehicleUtilizationUseCase {
 
     const vehicle = await this.vehicleRepository.findById(vehicleId);
     if (!vehicle) throw new VehicleNotFoundError();
+
+    const driverIsUsingVehicle = await this
+      .vehicleUtilizationRepository.driverIsUsingVehicle(driverId);
+    if (driverIsUsingVehicle) throw new VehicleUtilizationConflictDriverError();
+
+    const vehicleIsInUse = await this.vehicleUtilizationRepository.vehicleIsInUse(vehicleId);
+    if (vehicleIsInUse) throw new VehicleUtilizationConflictVehicleError();
 
     return {
       driver,

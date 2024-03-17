@@ -24,4 +24,16 @@ export default class InMemoryVehicleUtilizationRepository implements VehicleUtil
       return vehicleUtilization;
     });
   }
+
+  async driverIsUsingVehicle(driverId: string): Promise<boolean> {
+    return this.vehiclesUtilization.some(({ driver, vehicleUtilizationIsActive }) => (
+      driver.id === driverId && vehicleUtilizationIsActive
+    ));
+  }
+
+  async vehicleIsInUse(vehicleId: string): Promise<boolean> {
+    return this.vehiclesUtilization.some(({ vehicle, vehicleUtilizationIsActive }) => (
+      vehicle.id === vehicleId && vehicleUtilizationIsActive
+    ));
+  }
 }
