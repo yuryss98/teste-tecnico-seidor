@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { VehicleUtilizationEntity } from '../../entity/vehicle-utilization.entity';
 import { Vehicle } from '../../entity/vehicle.entity';
 import { Driver } from '../../entity/driver.entity';
 import CreateVehicleUtilizationUseCase from './create-vehicle-utilization.use-case';
@@ -8,6 +9,10 @@ import InMemoryVehicleUtilizationRepository
   from '../../../db/in-memory-vehicle-utilization-repository';
 import DriverNotFoundError from '../../error/driver-not-found.error';
 import VehicleNotFoundError from '../../error/vehicle-not-found.error';
+import VehicleUtilizationConflictDriverError
+  from '../../error/vehicle-utilization-conflict-driver.error';
+import VehicleUtilizationConflictVehicleError
+  from '../../error/vehicle-utilization-conflict-vehicle.error';
 
 const newVehicle = {
   plate: 'ABC-1234',
@@ -20,6 +25,7 @@ const newDriver = {
   name: 'Driver name',
 };
 const driverId = 'bbbbbbbb-bbbb-1ccc-8ddd-eeeeeeeeeeee';
+const newDriverId = 'dddddddd-bbbb-1ccc-8ddd-eeeeeeeeeeee';
 
 const newVehicleUtilization = {
   vehicleId,
@@ -30,13 +36,14 @@ const newVehicleUtilization = {
 describe('Create vehicle utilization use case', () => {
   const vehicleRepository = new InMemoryVehicleRepository();
   const driverRepository = new InMemoryDriverRepository();
+  const vehicle = new Vehicle(newVehicle, vehicleId);
+  const driver = new Driver(newDriver, driverId);
+  const driver1 = new Driver(newDriver, newDriverId);
 
   beforeAll(async () => {
-    const vehicle = new Vehicle(newVehicle, vehicleId);
     await vehicleRepository.create(vehicle);
-
-    const driver = new Driver(newDriver, driverId);
     await driverRepository.create(driver);
+    await driverRepository.create(driver1);
   });
 
   it('Should be able to create a new vehicle utilization', async () => {
@@ -87,5 +94,58 @@ describe('Create vehicle utilization use case', () => {
         vehicleId: invalidVehicleId,
       });
     }).rejects.toThrow(VehicleNotFoundError);
+  });
+
+  it('Should throw an error if the driver is already using a vehicle', async () => {
+    const vehicleUtilizationRepository = new InMemoryVehicleUtilizationRepository();
+    vehicleUtilizationRepository.vehiclesUtilization = [];
+    const vehiclesUtilization = new VehicleUtilizationEntity(
+      {
+        startDate: new Date(),
+        utilizationMotive: 'New vehicle utilization motive',
+        vehicleUtilizationIsActive: true,
+      },
+      driver,
+      vehicle,
+    );
+    await vehicleUtilizationRepository.create(vehiclesUtilization);
+
+    const createVehicleUtilization = new CreateVehicleUtilizationUseCase(
+      vehicleUtilizationRepository,
+      driverRepository,
+      vehicleRepository,
+    );
+
+    expect(async () => {
+      await createVehicleUtilization.execute(newVehicleUtilization);
+    }).rejects.toThrow(VehicleUtilizationConflictDriverError);
+  });
+
+  it('Should throw an error if the vehicle is in use', async () => {
+    const vehicleUtilizationRepository = new InMemoryVehicleUtilizationRepository();
+    vehicleUtilizationRepository.vehiclesUtilization = [];
+    const vehiclesUtilization = new VehicleUtilizationEntity(
+      {
+        startDate: new Date(),
+        utilizationMotive: 'New vehicle utilization motive',
+        vehicleUtilizationIsActive: true,
+      },
+      driver,
+      vehicle,
+    );
+    await vehicleUtilizationRepository.create(vehiclesUtilization);
+
+    const createVehicleUtilization = new CreateVehicleUtilizationUseCase(
+      vehicleUtilizationRepository,
+      driverRepository,
+      vehicleRepository,
+    );
+
+    expect(async () => {
+      await createVehicleUtilization.execute({
+        ...newVehicleUtilization,
+        driverId: newDriverId,
+      });
+    }).rejects.toThrow(VehicleUtilizationConflictVehicleError);
   });
 });
