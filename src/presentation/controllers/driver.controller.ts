@@ -3,12 +3,14 @@ import CreateDriverUseCase from '../../domain/use-cases/driver/create-driver.use
 import MissingParamError from '../error/missing-param-error';
 import GetDriverByIdUseCase from '../../domain/use-cases/driver/get-driver-by-id.use-case';
 import GetDriversCase from '../../domain/use-cases/driver/get-drivers.use-case';
+import UpdateDriverUseCase from '../../domain/use-cases/driver/update-driver.use-case';
 
 export default class DriverController {
   constructor(
     private createDriverUseCase: CreateDriverUseCase,
     private getDriverByIdUseCase: GetDriverByIdUseCase,
     private getDriversCase: GetDriversCase,
+    private updateDriverUseCase: UpdateDriverUseCase,
   ) { }
 
   create = async (req: Request, res: Response) => {
@@ -42,5 +44,14 @@ export default class DriverController {
         name: driver.name,
       })),
     });
+  };
+
+  update = async (req: Request, res: Response) => {
+    const requiredField = 'name';
+    if (!req.body[requiredField]) throw new MissingParamError();
+
+    await this.updateDriverUseCase.execute(req.body, req.params.driverId);
+
+    return res.status(204).end();
   };
 }
