@@ -7,5 +7,6 @@ const vehicleController = makeVehicleController();
 router.post('/create', vehicleController.create);
 router.get('/all', vehicleController.getVehicles);
 router.get('/:vehicleId', vehicleController.getById);
+router.put('/:vehicleId', vehicleController.update);
 
 export default router;

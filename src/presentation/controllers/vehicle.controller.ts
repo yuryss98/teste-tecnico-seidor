@@ -55,4 +55,15 @@ export default class VehicleController {
       })),
     });
   };
+
+  update = async (req: Request, res: Response) => {
+    const requiredFields = ['plate', 'color', 'brand'];
+    requiredFields.forEach((field) => {
+      if (!req.body[field]) throw new MissingParamError();
+    });
+
+    await this.updateVehicleUseCase.execute(req.body, req.params.vehicleId);
+
+    return res.status(204).end();
+  };
 }
