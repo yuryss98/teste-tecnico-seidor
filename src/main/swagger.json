@@ -341,6 +341,64 @@
             "description": "Vehicle not found error"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Update vehicle",
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "Vehicle Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "plate",
+                  "color",
+                  "brand"
+                ],
+                "properties": {
+                  "plate": {
+                    "type": "string",
+                    "example": "BRA3E30"
+                  },
+                  "color": {
+                    "type": "string",
+                    "example": "Red"
+                  },
+                  "brand": {
+                    "type": "string",
+                    "example": "Ferrari"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Vehicle updated"
+          },
+          "400": {
+            "description": "Missing param error"
+          },
+          "404": {
+            "description": "Vehicle not found error"
+          }
+        }
       }
     },
     "/vehicle/all": {
