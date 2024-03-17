@@ -399,6 +399,32 @@
             "description": "Vehicle not found error"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Vehicle"
+        ],
+        "summary": "Delete vehicle",
+        "parameters": [
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "description": "Vehicle Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "f8765bd4-06b5-4603-809a-621b3ce75088"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vehicle deleted"
+          },
+          "404": {
+            "description": "Vehicle not found error"
+          }
+        }
       }
     },
     "/vehicle/all": {
