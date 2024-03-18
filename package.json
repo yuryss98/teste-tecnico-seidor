@@ -4,6 +4,7 @@
   "description": "Teste técnico",
   "main": "dist/main/server.js",
   "scripts": {
+    "prebuild": "rm -rf dist && rm -f tsconfig.tsbuildinfo",
     "build": "npx tsc",
     "start": "node .",
     "test": "jest --silent --runInBand",
