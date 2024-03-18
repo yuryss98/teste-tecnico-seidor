@@ -32,7 +32,7 @@ cd teste-tecnico-seidor
 ```
 
 
-Execute o seguinte comandos:
+Execute o seguinte comando:
 ```bash
   npm install
 ```
